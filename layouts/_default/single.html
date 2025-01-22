@@ -1,21 +1,50 @@
 {{ define "main" }}
-{{ partial "back_link.html" .}}
+  {{ partial "back_link.html" . }}
 
-<article>
-    <p class="post-meta">
-        <time datetime="{{ .Date }}">
-            {{ .Date | time.Format site.Params.theme_config.date_format }}
-        </time>
-    </p>
+  <article>
+    <header>
+      <h1>{{ .Title }}</h1>
+      <p>Posted on {{ .Date.Format "January 2, 2006" }}</p>
 
-    <h1>{{ .Title }}</h1>
+      <div class="categories">
+        <strong>Categories:</strong> 
+        {{ $categories := .Params.categories }}
+        {{ range $index, $category := $categories }}
+          <a href="/categories/{{ $category | urlize }}" class="category-link">{{ $category }}</a>
+          {{ if ne $index (sub (len $categories) 1) }} , {{ end }}
+        {{ end }}
+      </div>
+      
+      <!-- Tags Section -->
+      <div class="tags">
+        <strong>Tags:</strong> 
+        {{ $tags := .Params.tags }}
+        {{ range $index, $tag := $tags }}
+          <a href="/tags/{{ $tag | urlize }}" class="tag-link">{{ $tag }}</a>
+          {{ if ne $index (sub (len $tags) 1) }} , {{ end }}
+        {{ end }}
+      </div>
 
-    {{ if .Params.toc }}
+      <!-- Table of Contents (if any) -->
+      {{ if .Params.toc }}
         <aside {{ if .Params.tocBorder }} class="toc" {{ end }}>
-            {{ .TableOfContents }}
+          {{ .TableOfContents }}
         </aside>
-    {{ end }}
+      {{ end }}
+    </header>
 
-    {{ .Content }}
-</article>
+    <!-- Post Metadata (Reading Time) -->
+    <div class="post-meta">
+      <span class="reading-time">
+        <!-- Icon for the reading time -->
+        <i class="fas fa-clock"></i> 
+        {{ .Params.reading_time }} Minute Read
+      </span>
+    </div>
+
+    <!-- Post Content -->
+    <div class="post-content">
+      {{ .Content }}
+    </div>
+  </article>
 {{ end }}

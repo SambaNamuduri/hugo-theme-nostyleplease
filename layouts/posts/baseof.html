@@ -16,6 +16,7 @@
             </div>
         </main>
     </body>
+    
     {{- if .Params.custom_js -}}
         {{- range .Params.custom_js -}}
             {{ $js := resources.Get (print "js/" . ".js") }}

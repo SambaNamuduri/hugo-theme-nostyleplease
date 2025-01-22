@@ -22,7 +22,9 @@
   }
 
   pre {
-    background: $--bg-color;
+    background-color: $--bg-color; /* Use theme background */
+    color: $--primary-text-color;  /* Match text color */
+    border: 1px solid $--secondary-text-color; /* Add border for better separation */
   }
 
   code:not(pre > code) {
@@ -52,12 +54,14 @@
 }
 
 @mixin dark-appearance {
-  @include theme(#000000, #ffffff, #000000, #79a8ff, #f78fe7, #2f3849); // modus-vivendi
+  @include theme(#000000, #ffffff, #aaaaaa, #79a8ff, #f78fe7, #2f3849);
 }
 
+
 @mixin light-appearance {
-  @include theme(#ffffff, #000000, #595959, #3548cf, #8f0075, #dae5ec); // modus-operandi
+  @include theme(#ffffff, #000000, #666666, #3548cf, #8f0075, #dae5ec);
 }
+
 
 body[a="dark"] { @include dark-appearance; }
 body[a="light"] { @include light-appearance; }
@@ -104,8 +108,13 @@ hr {
 }
 
 pre {
+  position: relative;
   padding: 1em;
-  overflow-x: auto; /* Fix pre content overflowing parent without scroll bar */
+  overflow-x: auto;  /* Horizontal scroll for long lines */
+  max-height: none;  /* Remove height restriction */
+  height: auto;      /* Allow dynamic height */
+  white-space: pre-wrap;  /* Line wrap if needed */
+  font-size: 1em;/* Fix pre content overflowing parent without scroll bar */
 }
 
 table { width: 100%; }
@@ -178,4 +187,78 @@ details[open] summary {
 
 .toc {
   padding: 1rem;
+}
+.copy-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  z-index: 10;
+}
+
+.copy-button:hover {
+  background-color: #0056b3;
+}
+
+.reading-time {
+  font-size: 1.2rem;
+  color: #888;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.reading-time i {
+  margin-right: 8px; /* Space between the icon and the text */
+  color: #ff6347; /* Customize the icon color */
+}
+
+/* Categories and Tags Styling */
+.categories, .tags {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.categories a, .tags a {
+  text-decoration: none;
+  color: #3548cf; /* Adjust to your theme's color */
+  font-weight: bold;
+}
+
+.categories a:hover, .tags a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  color: #333;
+}
+
+/* Reading Time Styling */
+.reading-time {
+  display: flex;
+  align-items: center;
+}
+
+.reading-time i {
+  margin-right: 0.5rem;
+}
+
+.toc {
+  margin-top: 1rem;
+  background-color: #f4f4f4;
+  padding: 1rem;
+}
+
+.toc a {
+  display: block;
+  color: #333;
+}
+
+.toc a:hover {
+  text-decoration: underline;
 }
